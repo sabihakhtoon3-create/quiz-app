@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Class 9 Hard Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; text-align: center; }
+    h2 { color: darkblue; }
+    .question { font-weight: bold; margin: 20px 0; }
+    .quiz-container { display: none; }
+    button {
+      display: block;
+      margin: 8px auto;
+      padding: 12px;
+      border-radius: 8px;
+      width: 80%;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .correct {
+      background: green;
+      color: white;
+      box-shadow: 0 0 15px green;
+    }
+    .wrong {
+      background: red;
+      color: white;
+      box-shadow: 0 0 15px red;
+    }
+    .highlight {
+      background: skyblue;
+      color: black;
+      box-shadow: 0 0 15px skyblue;
+    }
+    #end h2 {
+      color: green;
+      font-size: 28px;
+    }
+    #end p {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h2>Class 9 Hard Quiz</h2>
+
+  <!-- Question 1 -->
+  <div class="quiz-container" id="q1">
+    <div class="question">1. Who was the first Indian woman to preside over the Indian National Congress?</div>
+    <button onclick="check(this, true, 'q1', 'q2')">a) Annie Besant</button>
+    <button onclick="check(this, false, 'q1', 'q2')">b) Sarojini Naidu</button>
+    <button onclick="check(this, false, 'q1', 'q2')">c) Vijayalakshmi Pandit</button>
+    <button onclick="check(this, false, 'q1', 'q2')">d) Indira Gandhi</button>
+  </div>
+
+  <!-- Question 2 -->
+  <div class="quiz-container" id="q2">
+    <div class="question">2. Champaran Satyagraha (1917) was related to which crop?</div>
+    <button onclick="check(this, true, 'q2', 'q3')">a) Indigo</button>
+    <button onclick="check(this, false, 'q2', 'q3')">b) Sugarcane</button>
+    <button onclick="check(this, false, 'q2', 'q3')">c) Cotton</button>
+    <button onclick="check(this, false, 'q2', 'q3')">d) Wheat</button>
+  </div>
+
+  <!-- Question 3 -->
+  <div class="quiz-container" id="q3">
+    <div class="question">3. Which Article of the Indian Constitution is called the "heart and soul" by Dr. Ambedkar?</div>
+    <button onclick="check(this, false, 'q3', 'q4')">a) Article 14</button>
+    <button onclick="check(this, false, 'q3', 'q4')">b) Article 19</button>
+    <button onclick="check(this, true, 'q3', 'q4')">c) Article 32</button>
+    <button onclick="check(this, false, 'q3', 'q4')">d) Article 370</button>
+  </div>
+
+  <!-- Question 4 -->
+  <div class="quiz-container" id="q4">
+    <div class="question">4. Bihar’s only Tiger Reserve is:</div>
+    <button onclick="check(this, false, 'q4', 'end')">a) Rajgir Reserve</button>
+    <button onclick="check(this, true, 'q4', 'end')">b) Valmiki Tiger Reserve</button>
+  </div>
+
+  <!-- End Screen -->
+  <div class="quiz-container" id="end">
+    <h2>🎉 Congratulations!</h2>
+    <p id="score"></p>
+    <p>🙏 Thanks for completing the quiz!</p>
+  </div>
+
+  <script>
+    let score = 0, total = 4;
+
+    // Show first question
+    document.getElementById("q1").style.display = "block";
+
+    function check(button, isCorrect, currentQ, nextQ) {
+      let parent = button.parentElement;
+      let buttons = parent.querySelectorAll("button");
+      let correctBtn = null;
+
+      // Find the correct button in this question
+      buttons.forEach(b => {
+        if (b.getAttribute("onclick").includes("true")) {
+          correctBtn = b;
+        }
+      });
+
+      if (isCorrect) {
+        button.classList.add("correct");
+        score++;
+      } else {
+        button.classList.add("wrong");
+        if (correctBtn) correctBtn.classList.add("highlight"); // Highlight correct answer
+      }
+
+      // Disable all buttons
+      buttons.forEach(b => b.disabled = true);
+
+      // Move to next question after 1.5 seconds
+      setTimeout(() => {
+        document.getElementById(currentQ).style.display = "none";
+        document.getElementById(nextQ).style.display = "block";
+
+        // If end, show score
+        if (nextQ === "end") {
+          document.getElementById("score").innerText =
+            `You got ${score} out of ${total} correct.`;
+        }
+      }, 1500);
+    }
+  </script>
+</body>
+</html>
